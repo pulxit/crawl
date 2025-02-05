@@ -5,6 +5,7 @@ import time
 from urllib.parse import urljoin, urlparse
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 import json
 import asyncio
 
@@ -30,10 +31,13 @@ def fetch_category_page_content(url):
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-gpu")
         
-        # Optionally, set the binary location if Chrome/Chromium is in a custom path.
-        # options.binary_location = "/usr/bin/chromium-browser"  # Uncomment and adjust if needed.
+        # Specify the path to the Chromium browser binary.
+        options.binary_location = "/usr/bin/chromium-browser"
         
-        driver = webdriver.Chrome(options=options)
+        # Create a Service object with the path to the ChromeDriver installed via packages.txt.
+        service = Service(executable_path="/usr/bin/chromedriver")
+        driver = webdriver.Chrome(service=service, options=options)
+        
         driver.get(url)
         # Initial wait for content to load
         time.sleep(3)

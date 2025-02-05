@@ -233,6 +233,7 @@ def streamlit_app():
     st.markdown("""
     **Instructions:**
     - Enter one or more category URLs (one per line) below.
+    - Category URLs should be pages that list products, such as a product category, search results, or collection pages.
     - Click **Crawl** to begin.
     """)
     

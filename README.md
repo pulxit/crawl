@@ -2,7 +2,7 @@
 
 SPIDER is a scalable web crawler designed to discover product URLs across various e-commerce websites. This project uses a hybrid approach combining traditional web crawling techniques with modern LLM-based link classification to handle diverse e-commerce platforms efficiently.
 
-[Demo Link](placeholder)
+[Demo Link](https://spider-recon.streamlit.app/)
 
 ## Features
 

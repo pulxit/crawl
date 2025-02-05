@@ -24,6 +24,15 @@ def fetch_category_page_content(url):
         options = Options()
         options.headless = True
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
+
+        # Extra options needed in containerized environments like Streamlit Cloud.
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-gpu")
+        
+        # Optionally, set the binary location if Chrome/Chromium is in a custom path.
+        # options.binary_location = "/usr/bin/chromium-browser"  # Uncomment and adjust if needed.
+        
         driver = webdriver.Chrome(options=options)
         driver.get(url)
         # Initial wait for content to load

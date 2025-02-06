@@ -244,13 +244,16 @@ def streamlit_app():
             st.warning("Please enter at least one URL.")
         else:
             category_urls = [line.strip() for line in input_text.splitlines() if line.strip()]
-            results = {}
-            progress_bar = st.progress(0)
-            for i, url in enumerate(category_urls):
-                with st.spinner(f"Crawling {url} ..."):
-                    product_links = asyncio.run(async_crawl_category_page(url))
-                    results[url] = product_links
-                progress_bar.progress((i + 1) / len(category_urls))
+            
+            # Define an async function to concurrently crawl pages.
+            async def crawl_all(urls):
+                tasks = [async_crawl_category_page(url) for url in urls]
+                responses = await asyncio.gather(*tasks)
+                return dict(zip(urls, responses))
+            
+            with st.spinner("Crawling category pages concurrently ..."):
+                results = asyncio.run(crawl_all(category_urls))
+                
             st.success("Crawling complete!")
             st.subheader("Crawl Results:")
             st.json(results)

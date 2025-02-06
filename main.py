@@ -248,7 +248,7 @@ def streamlit_app():
             progress_bar = st.progress(0)
             for i, url in enumerate(category_urls):
                 with st.spinner(f"Crawling {url} ..."):
-                    product_links = crawl_category_page(url)
+                    product_links = asyncio.run(async_crawl_category_page(url))
                     results[url] = product_links
                 progress_bar.progress((i + 1) / len(category_urls))
             st.success("Crawling complete!")
